@@ -1,0 +1,26 @@
+name: Submit a Link
+description: Suggest a link for an upcoming issue of Core Dispatch
+title: "[Submit] "
+labels: ["submission"]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      placeholder: https://...
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      placeholder: What's this about?
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Why is this interesting?
+      placeholder: A sentence or two about why this is worth including.
+    validations:
+      required: false

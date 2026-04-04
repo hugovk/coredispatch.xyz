@@ -1,0 +1,75 @@
+export interface IssueQuote {
+  text: string;
+  author: string;
+  url?: string;
+}
+
+export interface IssueCredit {
+  name: string;
+  url?: string;
+}
+
+export interface Issue {
+  id: string;
+  number: number;
+  title: string;
+  slug: string;
+  editorial_notes: string;
+  status: string;
+  published_at: string | null;
+  period_start: string;
+  period_end: string;
+  created_at: string;
+  quote?: IssueQuote;
+  credits?: IssueCredit[];
+}
+
+export interface Item {
+  id: string;
+  issue_id: string | null;
+  section: string;
+  title: string;
+  url: string;
+  summary: string;
+  editorial_note: string;
+  source: string;
+  source_id: string;
+  status: string;
+  sort_order: number;
+  metadata_: Record<string, unknown> | null;
+  fetched_at: string | null;
+  created_at: string;
+}
+
+export type Section =
+  | "upcoming_releases"
+  | "official_news"
+  | "pep_updates"
+  | "steering_council"
+  | "merged_prs"
+  | "discussions"
+  | "events"
+  | "musings"
+  | "picks";
+
+export const SECTION_LABELS: Record<Section, string> = {
+  upcoming_releases: "Upcoming Releases",
+  official_news: "Official News",
+  pep_updates: "PEP Updates",
+  steering_council: "Steering Council Updates",
+  merged_prs: "Merged PRs",
+  discussions: "Discussion",
+  events: "Upcoming CFPs & Conferences",
+  musings: "Core Dev Musings",
+  picks: "Community",
+};
+
+export const SECTION_DESCRIPTIONS: Partial<Record<Section, string>> = {
+  official_news: "From the Python and PyPI blogs.",
+  pep_updates: "PEPs that changed status since last edition.",
+  steering_council: "Meeting summaries from the Python Steering Council.",
+  merged_prs: "Top merged CPython PRs by traffic since last edition.",
+  discussions: "Most active PEP discussions on Discourse since last edition.",
+  musings: "Recent posts from Python core developers.",
+  picks: "Community-submitted links, talks, and tools.",
+};

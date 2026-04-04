@@ -1,0 +1,21 @@
+# Blog feeds to pull into the Community section.
+# Use tag-filtered feed URLs where available to avoid off-topic posts.
+# Add a new entry to include another feed.
+
+- name: Python Blog
+  url: https://blog.python.org/rss.xml
+
+- name: Brett Cannon
+  url: https://snarky.ca/tag/python/rss/
+
+- name: Savannah Ostrowski
+  url: https://savannah.dev/tags/cpython/index.xml
+
+- name: Ken Jin
+  url: https://fidget-spinner.github.io/feed.xml
+
+- name: Hugo van Kemenade
+  url: https://hugovk.dev/tags/python/index.xml
+
+- name: Emma Smith
+  url: https://emmatyping.dev/tag/python.html

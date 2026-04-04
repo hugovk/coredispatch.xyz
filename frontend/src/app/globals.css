@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fffbf5;
+  --foreground: #1a1a2e;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #eef2ff;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --surface: #ffffff;
+  --surface-raised: #f8fafc;
+  --python-blue: #4f7cac;
+  --python-yellow: #d97706;
+  --success: #047857;
+  --gradient-start: #4f46e5;
+  --gradient-end: #a855f7;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-light: var(--accent-light);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-python-blue: var(--python-blue);
+  --color-python-yellow: var(--python-yellow);
+  --color-success: var(--success);
+  --color-gradient-start: var(--gradient-start);
+  --color-gradient-end: var(--gradient-end);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f0f1a;
+    --foreground: #e5e7eb;
+    --accent: #818cf8;
+    --accent-hover: #a5b4fc;
+    --accent-light: #1e1b4b;
+    --muted: #6b7280;
+    --border: #1f2937;
+    --surface: #1a1a2e;
+    --surface-raised: #252540;
+    --python-blue: #7da7d4;
+    --python-yellow: #fbbf24;
+    --success: #34d399;
+    --gradient-start: #818cf8;
+    --gradient-end: #c084fc;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}

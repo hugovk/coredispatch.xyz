@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      SITE_URL: http://localhost:3000
+      ISSUES_DIR: /issues
+    volumes:
+      - ./backend/app:/app/app
+      - ./issues:/issues
+      - ./feeds.yml:/feeds.yml
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+      - ./issues:/issues
+    depends_on:
+      - backend
