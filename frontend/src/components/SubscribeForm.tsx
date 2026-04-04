@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { subscribe } from "@/lib/api";
+
+const BUTTONDOWN_URL =
+  "https://buttondown.com/api/emails/embed-subscribe/coredispatch";
 
 export function SubscribeForm() {
   const [email, setEmail] = useState("");
@@ -13,7 +15,12 @@ export function SubscribeForm() {
     e.preventDefault();
     setStatus("submitting");
     try {
-      await subscribe(email);
+      await fetch(BUTTONDOWN_URL, {
+        method: "POST",
+        body: new URLSearchParams({ email }),
+        mode: "no-cors",
+      });
+      // no-cors means we can't read the response, but if it didn't throw, it worked
       setStatus("success");
       setEmail("");
     } catch {
@@ -25,7 +32,7 @@ export function SubscribeForm() {
     return (
       <div className="rounded-lg border border-success/30 bg-success/5 p-4 text-center">
         <p className="text-sm font-medium text-success">
-          You&apos;re in! Check your email to confirm.
+          Check your email to confirm your subscription.
         </p>
       </div>
     );

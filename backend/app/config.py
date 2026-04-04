@@ -9,8 +9,6 @@ class Settings(BaseSettings):
     )
 
     github_token: str = ""
-    resend_api_key: str = ""
-    resend_audience_id: str = ""
     site_url: str = "http://localhost:3000"
     cors_origins: list[str] = ["http://localhost:3000"]
     issues_dir: str = str(Path(__file__).resolve().parents[2] / "issues")

@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.api import feed, subscribers
+from app.api import feed
 from app.config import settings
 
 app = FastAPI(title="Core Dispatch", description="This Week in Python")
@@ -18,7 +18,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(subscribers.router, prefix="/api/subscribers", tags=["subscribers"])
 app.include_router(feed.router, prefix="/api/feed", tags=["feed"])
 
 
