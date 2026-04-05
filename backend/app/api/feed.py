@@ -106,6 +106,17 @@ async def rss_feed():
         fe.title(issue.get("title", ""))
         fe.link(href=f"{settings.site_url}/editions/{issue.get('number', '')}")
         fe.id(f"{settings.site_url}/editions/{issue.get('number', '')}")
+        editorial = (
+            (issue.get("editorial_notes") or "")
+            .replace("<!--", "")
+            .replace("-->", "")
+            .strip()
+        )
+        fe.description(editorial[:300] if editorial else issue.get("title", ""))
         fe.content(_render_issue_html(issue), type="html")
+        period_end = issue.get("period_end", "")
+        if period_end:
+            fe.published(f"{period_end}T00:00:00+00:00")
+            fe.updated(f"{period_end}T00:00:00+00:00")
 
     return Response(content=fg.rss_str(pretty=True), media_type="application/rss+xml")
