@@ -1,6 +1,9 @@
 # Official Python project blogs.
 # Posts from these feeds appear in the "Official News" section.
 
+- name: PyCon US
+  url: https://pycon.blogspot.com/feeds/posts/default?alt=rss
+
 - name: PyPI Blog
   url: https://blog.pypi.org/feed_rss_created.xml
 
