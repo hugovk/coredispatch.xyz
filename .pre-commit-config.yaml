@@ -10,9 +10,9 @@ repos:
 
   - repo: local
     hooks:
-      - id: pyright
-        name: pyright
-        entry: sh -c 'cd backend && uv run python -m pyright .'
+      - id: ty
+        name: ty
+        entry: sh -c 'cd backend && uv run ty check'
         language: system
         files: ^backend/.*\.py$
         pass_filenames: false
