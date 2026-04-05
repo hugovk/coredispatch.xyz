@@ -84,7 +84,7 @@ items:
     topic_id: 106655
     category: committers
 - section: merged_prs
-  title: 'GH-147985: Use lock-free lookup in PySet_Contains().'
+  title: "Lock-free set lookups in free-threaded builds"
   url: https://github.com/python/cpython/pull/147986
   summary: ''
   source: github
@@ -97,49 +97,17 @@ items:
     - topic-free-threading
     comments: 0
 - section: merged_prs
-  title: 'gh-138580: add sys.float_info.iec_60559 boolean flag'
-  url: https://github.com/python/cpython/pull/138811
+  title: "Make timeit autorange target time configurable"
+  url: https://github.com/python/cpython/pull/140283
   summary: ''
   source: github
   metadata:
-    pr_number: 138811
-    author: skirpichev
+    pr_number: 140283
+    author: miikka
     labels: []
-    comments: 23
+    comments: 12
 - section: merged_prs
-  title: 'gh-138577: Fix keyboard shortcuts in getpass with echo_char'
-  url: https://github.com/python/cpython/pull/141597
-  summary: ''
-  source: github
-  metadata:
-    pr_number: 141597
-    author: CuriousLearner
-    labels: []
-    comments: 18
-- section: merged_prs
-  title: 'gh-146004: propagate all -X options to multiprocessing child processes'
-  url: https://github.com/python/cpython/pull/146005
-  summary: ''
-  source: github
-  metadata:
-    pr_number: 146005
-    author: gpshead
-    labels:
-    - needs backport to 3.13
-    comments: 17
-- section: merged_prs
-  title: 'gh-145633: Fix struct.pack(''f'') on s390x'
-  url: https://github.com/python/cpython/pull/146422
-  summary: ''
-  source: github
-  metadata:
-    pr_number: 146422
-    author: vstinner
-    labels: []
-    comments: 17
-- section: merged_prs
-  title: 'gh-143414: Implement unique reference tracking for JIT, optimize unpacking
-    of such tuples'
+  title: "JIT: unique reference tracking and optimized tuple unpacking"
   url: https://github.com/python/cpython/pull/144300
   summary: ''
   source: github
@@ -149,7 +117,17 @@ items:
     labels: []
     comments: 16
 - section: merged_prs
-  title: 'gh-138122: Add differential flame graph'
+  title: "Support Base32 and Base64 encoding without padding"
+  url: https://github.com/python/cpython/pull/147974
+  summary: ''
+  source: github
+  metadata:
+    pr_number: 147974
+    author: serhiy-storchaka
+    labels: []
+    comments: 0
+- section: merged_prs
+  title: "Add differential flame graphs to the new Tachyon profiler"
   url: https://github.com/python/cpython/pull/145785
   summary: ''
   source: github
@@ -159,7 +137,7 @@ items:
     labels: []
     comments: 4
 - section: merged_prs
-  title: 'gh-146440: Add "array_hook" parameter to JSON decoders'
+  title: "New array_hook parameter for JSON decoders"
   url: https://github.com/python/cpython/pull/146441
   summary: ''
   source: github
@@ -168,26 +146,6 @@ items:
     author: jsbueno
     labels: []
     comments: 4
-- section: merged_prs
-  title: 'gh-146541: Allow building the Android testbed for 32-bit targets'
-  url: https://github.com/python/cpython/pull/146542
-  summary: ''
-  source: github
-  metadata:
-    pr_number: 146542
-    author: robertkirkman
-    labels: []
-    comments: 13
-- section: merged_prs
-  title: 'gh-146192: Add base32 support to binascii'
-  url: https://github.com/python/cpython/pull/146193
-  summary: ''
-  source: github
-  metadata:
-    pr_number: 146193
-    author: kangtastic
-    labels: []
-    comments: 3
 - section: discussions
   title: 'PEP 829: Structured Startup Configuration via .site.toml Files'
   url: https://discuss.python.org/t/pep-829-structured-startup-configuration-via-site-toml-files/106789

@@ -1,7 +1,7 @@
 """Fetch merged CPython PRs from GitHub.
 
-Uses GitHub Search API with targeted queries to find significant PRs
-without needing per-PR file requests.
+Uses GitHub Search API with targeted queries to find significant PRs,
+plus a file-based search for PRs that touch Doc/whatsnew/ (user-facing changes).
 """
 
 from datetime import date, timedelta
@@ -32,13 +32,53 @@ SKIP_TITLE_PATTERNS = [
     "blurb",
 ]
 
-# Separate search queries to find signal PRs
+# Search queries to find signal PRs
 SEARCH_QUERIES = [
     'label:"type-feature"',
     'label:"type-security"',
     'label:"type-performance"',
     "comments:>=15",
 ]
+
+
+def _should_skip(pr: dict) -> bool:
+    """Check if a PR should be filtered out."""
+    author = pr.get("user", {}).get("login", "")
+    if author in BOT_AUTHORS:
+        return True
+
+    title = pr.get("title", "")
+    title_lower = title.lower()
+    if "backport" in title_lower or title.startswith("[3."):
+        return True
+
+    labels = [label["name"] for label in pr.get("labels", [])]
+    label_set = {lbl.lower() for lbl in labels}
+    if label_set & SKIP_LABELS:
+        return True
+    if any(pat in title_lower for pat in SKIP_TITLE_PATTERNS):
+        return True
+
+    return False
+
+
+def _pr_to_item(pr: dict, touches_whatsnew: bool = False) -> dict:
+    """Convert a GitHub PR to an item dict."""
+    labels = [label["name"] for label in pr.get("labels", [])]
+    return {
+        "section": "merged_prs",
+        "title": pr.get("title", ""),
+        "url": pr["html_url"],
+        "summary": "",
+        "source": "github",
+        "metadata": {
+            "pr_number": pr["number"],
+            "author": pr.get("user", {}).get("login", ""),
+            "labels": labels,
+            "comments": pr.get("comments", 0),
+            "touches_whatsnew": touches_whatsnew,
+        },
+    }
 
 
 async def _search_prs(client: httpx.AsyncClient, query: str, since: date) -> list[dict]:
@@ -73,12 +113,48 @@ async def _search_prs(client: httpx.AsyncClient, query: str, since: date) -> lis
     return results
 
 
+async def _find_whatsnew_prs(client: httpx.AsyncClient, since: date) -> list[dict]:
+    """Find PRs that touch Doc/whatsnew/ by checking file lists.
+
+    These are user-facing changes that someone cared enough to document.
+    """
+    # Get recently merged PRs (broader set)
+    prs = await _search_prs(client, "", since)
+    whatsnew_prs: list[dict] = []
+
+    for pr in prs:
+        if _should_skip(pr):
+            continue
+
+        pr_number = pr["number"]
+        try:
+            resp = await client.get(
+                f"{GITHUB_API}/repos/{CPYTHON_REPO}/pulls/{pr_number}/files",
+                params={"per_page": 100},
+            )
+            if resp.status_code != 200:
+                continue
+            files = [f["filename"] for f in resp.json()]
+            if any("whatsnew" in f for f in files):
+                # Only include if it touches more than just whatsnew (actual code change)
+                non_doc_files = [f for f in files if not f.startswith("Doc/")]
+                if non_doc_files:
+                    whatsnew_prs.append(pr)
+        except Exception:
+            continue
+
+    return whatsnew_prs
+
+
 async def fetch_github_prs(since: date | None = None) -> list[dict]:
-    """Fetch significant merged CPython PRs from the past month."""
+    """Fetch significant merged CPython PRs."""
     if since is None:
         since = date.today() - timedelta(days=14)
 
-    headers = {"Accept": "application/vnd.github+json"}
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "core-dispatch/1.0",
+    }
     if settings.github_token:
         headers["Authorization"] = f"Bearer {settings.github_token}"
 
@@ -86,6 +162,7 @@ async def fetch_github_prs(since: date | None = None) -> list[dict]:
     items: list[dict] = []
 
     async with httpx.AsyncClient(headers=headers, timeout=30) as client:
+        # 1. Search-based signal PRs (labels, comments)
         for query in SEARCH_QUERIES:
             try:
                 prs = await _search_prs(client, query, since)
@@ -94,46 +171,25 @@ async def fetch_github_prs(since: date | None = None) -> list[dict]:
                 continue
 
             for pr in prs:
-                pr_number = pr["number"]
-                if pr_number in seen:
+                if pr["number"] in seen or _should_skip(pr):
                     continue
-                seen.add(pr_number)
+                seen.add(pr["number"])
+                items.append(_pr_to_item(pr))
 
-                author = pr.get("user", {}).get("login", "")
-                if author in BOT_AUTHORS:
+        # 2. File-based signal: PRs that touch Doc/whatsnew/
+        try:
+            whatsnew_prs = await _find_whatsnew_prs(client, since)
+            for pr in whatsnew_prs:
+                if pr["number"] in seen:
+                    # Already included — just mark it
+                    for item in items:
+                        if item["metadata"]["pr_number"] == pr["number"]:
+                            item["metadata"]["touches_whatsnew"] = True
                     continue
-
-                title = pr.get("title", "")
-                title_lower = title.lower()
-                if "backport" in title_lower:
-                    continue
-                # Cherry-picks like "[3.10] ..." or "[3.11] ..."
-                if title.startswith("[3."):
-                    continue
-
-                labels = [label["name"] for label in pr.get("labels", [])]
-                label_set = {lbl.lower() for lbl in labels}
-
-                # Skip docs, CI, infrastructure PRs
-                if label_set & SKIP_LABELS:
-                    continue
-                if any(pat in title_lower for pat in SKIP_TITLE_PATTERNS):
-                    continue
-                items.append(
-                    {
-                        "section": "merged_prs",
-                        "title": title,
-                        "url": pr["html_url"],
-                        "summary": "",
-                        "source": "github",
-                        "metadata": {
-                            "pr_number": pr_number,
-                            "author": author,
-                            "labels": labels,
-                            "comments": pr.get("comments", 0),
-                        },
-                    }
-                )
+                seen.add(pr["number"])
+                items.append(_pr_to_item(pr, touches_whatsnew=True))
+        except Exception as e:
+            print(f"  Warning: whatsnew search failed: {e}")
 
     # Rank and take top 10
     def _score(item: dict) -> int:
@@ -146,9 +202,10 @@ async def fetch_github_prs(since: date | None = None) -> list[dict]:
             score += 40
         if "type-performance" in label_set or "performance" in label_set:
             score += 30
-        # New additions to stdlib are interesting
+        if meta.get("touches_whatsnew"):
+            score += 25
         title_lower = item["title"].lower()
-        if title_lower.startswith(("add ", "gh-")) and "add " in title_lower:
+        if "add " in title_lower:
             score += 10
         return score
 
