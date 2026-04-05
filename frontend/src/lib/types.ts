@@ -10,35 +10,24 @@ export interface IssueCredit {
 }
 
 export interface Issue {
-  id: string;
   number: number;
   title: string;
   slug: string;
   editorial_notes: string;
-  status: string;
-  published_at: string | null;
   period_start: string;
   period_end: string;
-  created_at: string;
   quote?: IssueQuote;
   credits?: IssueCredit[];
+  items: Item[];
 }
 
 export interface Item {
-  id: string;
-  issue_id: string | null;
   section: string;
   title: string;
   url: string;
   summary: string;
-  editorial_note: string;
   source: string;
-  source_id: string;
-  status: string;
-  sort_order: number;
-  metadata_: Record<string, unknown> | null;
-  fetched_at: string | null;
-  created_at: string;
+  metadata?: Record<string, unknown>;
 }
 
 export type Section =

@@ -1,17 +1,12 @@
-"use client";
-
 import { useState } from "react";
 
-const BUTTONDOWN_URL =
-  "https://buttondown.com/api/emails/embed-subscribe/coredispatch";
+const BUTTONDOWN_URL = "https://buttondown.com/api/emails/embed-subscribe/coredispatch";
 
-export function SubscribeForm() {
+export default function SubscribeForm() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<
-    "idle" | "submitting" | "success" | "error"
-  >("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
     setStatus("submitting");
     try {
@@ -20,7 +15,6 @@ export function SubscribeForm() {
         body: new URLSearchParams({ email }),
         mode: "no-cors",
       });
-      // no-cors means we can't read the response, but if it didn't throw, it worked
       setStatus("success");
       setEmail("");
     } catch {
@@ -55,9 +49,7 @@ export function SubscribeForm() {
       >
         {status === "submitting" ? "..." : "Subscribe"}
       </button>
-      {status === "error" && (
-        <p className="self-center text-xs text-red-500">Try again</p>
-      )}
+      {status === "error" && <p className="self-center text-xs text-red-500">Try again</p>}
     </form>
   );
 }

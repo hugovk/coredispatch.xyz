@@ -1,0 +1,31 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import EditionCard from "../../components/EditionCard.astro";
+import SubscribeForm from "../../components/SubscribeForm";
+import { getAllEditions } from "../../lib/issues";
+
+const editions = getAllEditions();
+---
+
+<Layout title="Editions">
+  <div class="mx-auto max-w-3xl px-6 py-10">
+    <h1 class="text-3xl font-bold tracking-tight mb-2">Editions</h1>
+    <p class="text-muted mb-8">Every edition of Core Dispatch.</p>
+
+    {editions.length === 0 ? (
+      <p class="text-muted">No editions published yet. Stay tuned.</p>
+    ) : (
+      <div class="space-y-3">
+        {editions.map((issue) => <EditionCard issue={issue} />)}
+      </div>
+    )}
+
+    <div class="mt-14 rounded-xl bg-gradient-to-r from-gradient-start to-gradient-end p-[1px]">
+      <div class="rounded-[11px] bg-surface p-6">
+        <h2 class="font-semibold">Never miss an edition</h2>
+        <p class="mt-1 mb-4 text-sm text-muted">Delivered to your inbox.</p>
+        <SubscribeForm client:load />
+      </div>
+    </div>
+  </div>
+</Layout>

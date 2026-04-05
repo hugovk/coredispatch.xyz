@@ -1,1 +1,4 @@
 !static/
+!editions/
+!official.yml
+!core-blogs.yml

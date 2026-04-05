@@ -1,0 +1,61 @@
+---
+import type { Item, Section } from "../lib/types";
+import { SECTION_LABELS, SECTION_DESCRIPTIONS } from "../lib/types";
+import ItemCard from "./ItemCard.astro";
+
+interface Props {
+  section: Section;
+  items: Item[];
+}
+
+const { section, items } = Astro.props;
+
+if (items.length === 0) return;
+
+const ICONS: Record<Section, string> = {
+  upcoming_releases: "\u{1F4E6}",
+  official_news: "\u{1F4E2}",
+  pep_updates: "\u{1F4DC}",
+  steering_council: "\u{1F3DB}\u{FE0F}",
+  merged_prs: "\u{1F40D}",
+  discussions: "\u{1F4AC}",
+  events: "\u{1F4C5}",
+  musings: "\u{270D}\u{FE0F}",
+  picks: "\u{2B50}",
+};
+
+const isCompact = section === "events" || section === "upcoming_releases";
+const isReleases = section === "upcoming_releases";
+const description = SECTION_DESCRIPTIONS[section];
+---
+
+<section class="mb-10">
+  <div class="mb-2 pb-2 border-b border-border">
+    <div class="flex items-center gap-2.5">
+      <span class="text-lg" aria-hidden="true">{ICONS[section]}</span>
+      <h2 class="text-base font-semibold">{SECTION_LABELS[section]}</h2>
+      <span class="rounded-full bg-accent-light px-2 py-0.5 text-xs font-medium text-accent">{items.length}</span>
+    </div>
+    {description && <p class="mt-1 text-xs text-muted">{description}</p>}
+  </div>
+
+  {isReleases ? (
+    <div class="flex flex-wrap gap-2 mt-1">
+      {items.map((item) => (
+        <a href={item.url} target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3.5 py-2 text-sm font-medium hover:border-accent/40 hover:shadow-sm transition-all">
+          <span>{item.title}</span>
+          <span class="text-xs text-muted">{item.summary}</span>
+        </a>
+      ))}
+    </div>
+  ) : isCompact ? (
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
+      {items.map((item) => <ItemCard item={item} compact />)}
+    </div>
+  ) : (
+    <div class="divide-y divide-border/40">
+      {items.map((item) => <ItemCard item={item} />)}
+    </div>
+  )}
+</section>

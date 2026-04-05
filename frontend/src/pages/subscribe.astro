@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SubscribeForm from "../components/SubscribeForm";
+---
+
+<Layout title="Subscribe">
+  <div class="mx-auto max-w-xl px-6 py-10">
+    <h1 class="text-3xl font-bold tracking-tight mb-2">Subscribe</h1>
+    <p class="text-muted mb-8">
+      Get Core Dispatch delivered to your inbox. No spam, just Python.
+    </p>
+    <SubscribeForm client:load />
+    <p class="mt-6 text-xs text-muted">
+      Prefer RSS?{" "}
+      <a href="/api/feed/rss" class="underline hover:text-foreground transition-colors">
+        Grab the feed
+      </a>.
+    </p>
+  </div>
+</Layout>

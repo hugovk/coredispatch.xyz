@@ -1,0 +1,62 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Preamble from "../../components/Preamble.astro";
+import SectionBlock from "../../components/SectionBlock.astro";
+import QuoteOfTheWeek from "../../components/QuoteOfTheWeek.astro";
+import Credits from "../../components/Credits.astro";
+import type { GetStaticPaths } from "astro";
+import { getAllDrafts, getDraft } from "../../lib/issues";
+import { formatDateRange } from "../../lib/format";
+import { renderMarkdown } from "../../lib/markdown";
+
+export const getStaticPaths = (() => {
+  return getAllDrafts().map((draft) => ({
+    params: { number: String(draft.number) },
+  }));
+}) satisfies GetStaticPaths;
+
+const { number } = Astro.params;
+// @ts-ignore — Astro can't infer param types from dynamic getStaticPaths
+const issue = getDraft(Number(number))!;
+const editorial = issue.editorial_notes?.replace(/<!--[\s\S]*?-->/g, "").trim();
+const editorialHtml = editorial ? renderMarkdown(editorial) : "";
+
+const sections = ["official_news", "pep_updates", "steering_council", "merged_prs", "discussions"] as const;
+---
+
+<Layout title={`Draft: ${issue.title}`} noindex>
+  <div class="mx-auto max-w-3xl px-6 py-10">
+    <a href="/staging" class="inline-flex items-center gap-1 text-sm text-muted hover:text-foreground transition-colors">
+      ← Drafts
+    </a>
+
+    <div class="mt-4 mb-6 rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-center text-sm text-yellow-800 dark:border-yellow-700 dark:bg-yellow-950 dark:text-yellow-200">
+      Draft — this edition is not published yet.
+    </div>
+
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold tracking-tight">{issue.title}</h1>
+      <p class="mt-2 text-sm text-muted">{formatDateRange(issue.period_start, issue.period_end)}</p>
+    </div>
+
+    {editorialHtml && (
+      <div class="mb-10 space-y-4 text-sm leading-relaxed text-muted [&_a]:text-accent [&_a:hover]:text-accent-hover [&_code]:rounded [&_code]:bg-border/50 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-foreground/80"
+        set:html={editorialHtml} />
+    )}
+
+    <Preamble />
+
+    <SectionBlock section="upcoming_releases" items={issue.items.filter((i) => i.section === "upcoming_releases")} />
+
+    {sections.map((section) => (
+      <SectionBlock section={section} items={issue.items.filter((i) => i.section === section)} />
+    ))}
+
+    <SectionBlock section="musings" items={issue.items.filter((i) => i.section === "musings")} />
+    <SectionBlock section="picks" items={issue.items.filter((i) => i.section === "picks")} />
+    <SectionBlock section="events" items={issue.items.filter((i) => i.section === "events")} />
+
+    {issue.quote && <QuoteOfTheWeek quote={issue.quote} />}
+    {issue.credits && issue.credits.length > 0 && <Credits credits={issue.credits} />}
+  </div>
+</Layout>

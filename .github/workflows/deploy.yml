@@ -29,10 +29,10 @@ jobs:
         working-directory: frontend
         run: |
           bun install --frozen-lockfile
-          NEXT_PUBLIC_API_URL="" bun run build
+          bun run build
 
       - name: Copy frontend build to backend static dir
-        run: cp -r frontend/out backend/app/static
+        run: cp -r frontend/dist backend/app/static
 
       - name: Copy editions to backend
         run: cp -r editions backend/editions
@@ -40,10 +40,14 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
 
+      - name: Copy feed manifests to backend
+        run: |
+          cp official.yml backend/official.yml
+          cp core-blogs.yml backend/core-blogs.yml
+
       - name: Deploy to FastAPI Cloud
         working-directory: backend
         env:
           FASTAPI_CLOUD_TOKEN: ${{ secrets.FASTAPI_CLOUD_TOKEN }}
           FASTAPI_CLOUD_APP_ID: ${{ secrets.FASTAPI_CLOUD_APP_ID }}
-          EDITIONS_DIR: /app/editions
         run: uv run fastapi deploy

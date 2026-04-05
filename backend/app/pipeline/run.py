@@ -1,6 +1,6 @@
-"""Pipeline: fetch data from all sources, write a draft issue YAML file.
+"""Pipeline: fetch data from all sources, write a draft edition YAML file.
 
-Called by the GHA cron workflow. Outputs a YAML file to issues/ directory
+Called by the GHA cron workflow. Outputs a YAML file to drafts/ directory
 which the GHA then commits and opens as a draft PR.
 """
 

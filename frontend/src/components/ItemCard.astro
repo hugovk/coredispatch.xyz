@@ -1,0 +1,48 @@
+---
+import type { Item, Section } from "../lib/types";
+
+interface Props {
+  item: Item;
+  compact?: boolean;
+}
+
+const { item, compact = false } = Astro.props;
+const meta = item.metadata || {};
+const section = item.section as Section;
+
+// Determine right-aligned detail
+let rightText = "";
+let rightClass = "shrink-0 text-xs text-muted";
+
+if (section === "pep_updates" && "status" in meta) {
+  const status = String(meta.status);
+  rightText = status;
+  rightClass = status === "Accepted" || status === "Final"
+    ? "shrink-0 rounded-full px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+    : "shrink-0 rounded-full px-2 py-0.5 text-xs font-medium bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400";
+} else if ("submitted_by" in meta) {
+  rightText = `via @${meta.submitted_by}`;
+  rightClass = "shrink-0 text-xs text-muted font-mono";
+} else if ("author" in meta) {
+  const author = String(meta.author);
+  const isHandle = /^[a-zA-Z0-9_-]+$/.test(author);
+  rightText = isHandle ? `@${author}` : `by ${author}`;
+  rightClass = `shrink-0 text-xs text-muted ${isHandle ? "font-mono" : ""}`;
+} else if (item.summary) {
+  rightText = item.summary;
+}
+---
+
+{compact ? (
+  <a href={item.url} target="_blank" rel="noopener noreferrer"
+    class="group flex items-baseline justify-between gap-2 py-1.5 border-b border-border/30 last:border-0">
+    <span class="text-sm font-medium truncate group-hover:text-accent transition-colors">{item.title}</span>
+    {item.summary && <span class="shrink-0 text-xs text-muted">{item.summary}</span>}
+  </a>
+) : (
+  <a href={item.url} target="_blank" rel="noopener noreferrer"
+    class="group flex items-baseline justify-between gap-4 py-2.5">
+    <span class="text-[15px] font-medium group-hover:text-accent transition-colors">{item.title}</span>
+    {rightText && <span class={rightClass}>{rightText}</span>}
+  </a>
+)}

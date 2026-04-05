@@ -1,0 +1,81 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Preamble from "../../components/Preamble.astro";
+import SectionBlock from "../../components/SectionBlock.astro";
+import QuoteOfTheWeek from "../../components/QuoteOfTheWeek.astro";
+import Credits from "../../components/Credits.astro";
+import SubscribeForm from "../../components/SubscribeForm";
+import type { GetStaticPaths } from "astro";
+import { getAllEditions, getEdition, getAdjacentEditions } from "../../lib/issues";
+import { formatDateRange } from "../../lib/format";
+import { renderMarkdown } from "../../lib/markdown";
+
+export const getStaticPaths = (() => {
+  return getAllEditions().map((issue) => ({
+    params: { number: String(issue.number) },
+  }));
+}) satisfies GetStaticPaths;
+
+const { number } = Astro.params;
+// @ts-ignore — Astro can't infer param types from dynamic getStaticPaths
+const issue = getEdition(Number(number))!;
+const { prev, next } = getAdjacentEditions(issue.number);
+const editorial = issue.editorial_notes?.replace(/<!--[\s\S]*?-->/g, "").trim();
+const editorialHtml = editorial ? renderMarkdown(editorial) : "";
+
+const sections = ["official_news", "pep_updates", "steering_council", "merged_prs", "discussions"] as const;
+---
+
+<Layout title={issue.title}>
+  <div class="mx-auto max-w-3xl px-6 py-10">
+    <a href="/editions" class="inline-flex items-center gap-1 text-sm text-muted hover:text-foreground transition-colors">
+      &larr; Editions
+    </a>
+
+    <div class="mt-6 mb-10">
+      <h1 class="text-3xl font-bold tracking-tight">{issue.title}</h1>
+      <p class="mt-2 text-sm text-muted">{formatDateRange(issue.period_start, issue.period_end)}</p>
+    </div>
+
+    {editorialHtml && (
+      <div class="mb-10 space-y-4 text-sm leading-relaxed text-muted [&_a]:text-accent [&_a:hover]:text-accent-hover [&_code]:rounded [&_code]:bg-border/50 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-foreground/80"
+        set:html={editorialHtml} />
+    )}
+
+    <Preamble />
+
+    <SectionBlock section="upcoming_releases" items={issue.items.filter((i) => i.section === "upcoming_releases")} />
+
+    {sections.map((section) => (
+      <SectionBlock section={section} items={issue.items.filter((i) => i.section === section)} />
+    ))}
+
+    <SectionBlock section="musings" items={issue.items.filter((i) => i.section === "musings")} />
+    <SectionBlock section="picks" items={issue.items.filter((i) => i.section === "picks")} />
+    <SectionBlock section="events" items={issue.items.filter((i) => i.section === "events")} />
+
+    {issue.quote && <QuoteOfTheWeek quote={issue.quote} />}
+    {issue.credits && issue.credits.length > 0 && <Credits credits={issue.credits} />}
+
+    <div class="mt-14 flex items-center justify-between border-t border-border pt-6">
+      {prev ? (
+        <a href={`/editions/${prev.number}`} class="text-sm text-muted hover:text-accent transition-colors">
+          &larr; {prev.title}
+        </a>
+      ) : <span />}
+      {next ? (
+        <a href={`/editions/${next.number}`} class="text-sm text-muted hover:text-accent transition-colors text-right">
+          {next.title} &rarr;
+        </a>
+      ) : <span />}
+    </div>
+
+    <div class="mt-10 rounded-xl bg-gradient-to-r from-gradient-start to-gradient-end p-[1px]">
+      <div class="rounded-[11px] bg-surface p-6">
+        <h2 class="font-semibold">Enjoyed this edition?</h2>
+        <p class="mt-1 mb-4 text-sm text-muted">Get Core Dispatch in your inbox.</p>
+        <SubscribeForm client:load />
+      </div>
+    </div>
+  </div>
+</Layout>

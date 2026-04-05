@@ -1,0 +1,25 @@
+---
+import type { IssueCredit } from "../lib/types";
+
+interface Props {
+  credits: IssueCredit[];
+}
+
+const { credits } = Astro.props;
+---
+
+<div class="mt-10 border-t border-border pt-6 text-center text-sm text-muted">
+  <p class="font-medium text-foreground/60">This edition brought to you by:</p>
+  <p class="mt-2">
+    {credits.map((credit, i) => (
+      <>
+        {i > 0 && ", "}
+        {credit.url ? (
+          <a href={credit.url} class="text-accent hover:text-accent-hover transition-colors">{credit.name}</a>
+        ) : (
+          credit.name
+        )}
+      </>
+    ))}
+  </p>
+</div>

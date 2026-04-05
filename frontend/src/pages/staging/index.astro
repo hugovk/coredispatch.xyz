@@ -1,0 +1,25 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import EditionCard from "../../components/EditionCard.astro";
+import { getAllDrafts } from "../../lib/issues";
+
+const drafts = getAllDrafts();
+---
+
+<Layout title="Staging" noindex>
+  <div class="mx-auto max-w-3xl px-6 py-10">
+    <div class="mb-6 rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-center text-sm text-yellow-800 dark:border-yellow-700 dark:bg-yellow-950 dark:text-yellow-200">
+      Staging — these drafts are not published yet.
+    </div>
+    <h1 class="text-3xl font-bold tracking-tight mb-2">Drafts</h1>
+    <p class="text-muted mb-8">Preview editions before publishing.</p>
+
+    {drafts.length === 0 ? (
+      <p class="text-muted">No drafts.</p>
+    ) : (
+      <div class="space-y-3">
+        {drafts.map((issue) => <EditionCard issue={issue} basePath="/staging" />)}
+      </div>
+    )}
+  </div>
+</Layout>

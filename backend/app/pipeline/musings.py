@@ -4,16 +4,19 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from xml.etree import ElementTree
 
+import os
+
 import httpx
 import yaml
 
-MANIFEST_PATH = Path(__file__).resolve().parents[3] / "feeds.yml"
+MANIFEST_PATH = Path(
+    os.environ.get(
+        "CORE_BLOGS_PATH", str(Path(__file__).resolve().parents[3] / "core-blogs.yml")
+    )
+)
 
 ATOM_NS = "{http://www.w3.org/2005/Atom}"
 DC_NS = "{http://purl.org/dc/elements/1.1/}"
-
-# Skip the official blog — that goes in official_news
-SKIP_FEEDS = {"Python Blog"}
 
 
 def _parse_rss_date(date_str: str) -> datetime | None:
@@ -134,7 +137,7 @@ def _load_feeds() -> list[dict]:
 async def fetch_musings(days: int = 14) -> list[dict]:
     """Fetch recent posts from core dev personal blogs."""
     cutoff = datetime.now(timezone.utc) - timedelta(days=days)
-    feeds = [f for f in _load_feeds() if f["name"] not in SKIP_FEEDS]
+    feeds = _load_feeds()
     all_items: list[dict] = []
 
     async with httpx.AsyncClient(timeout=30, follow_redirects=True) as client:

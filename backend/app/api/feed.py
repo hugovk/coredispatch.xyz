@@ -1,3 +1,4 @@
+from html import escape
 from pathlib import Path
 
 import yaml
@@ -20,7 +21,7 @@ SECTION_LABELS = {
     "discussions": "Discussion",
     "events": "Upcoming CFPs & Conferences",
     "musings": "Core Dev Musings",
-    "picks": "Picks of the Week",
+    "picks": "Community",
 }
 
 SECTION_ORDER = [
@@ -37,15 +38,17 @@ SECTION_ORDER = [
 
 
 def _load_published_issues() -> list[dict]:
+    if not EDITIONS_DIR.exists():
+        return []
     issues = []
     for path in EDITIONS_DIR.glob("*.yml"):
-        if path.name.startswith("_"):
+        if path.name.startswith("_") or path.name.startswith("."):
             continue
         try:
             data = yaml.safe_load(path.read_text())
             if data and isinstance(data, dict):
                 issues.append(data)
-        except Exception:
+        except (yaml.YAMLError, OSError):
             continue
     issues.sort(key=lambda i: i.get("number", 0), reverse=True)
     return issues
@@ -62,7 +65,7 @@ def _render_issue_html(issue: dict) -> str:
         .strip()
     )
     if editorial:
-        parts.append(f"<p>{editorial}</p>")
+        parts.append(f"<p>{escape(editorial)}</p>")
 
     items = issue.get("items", [])
     for section in SECTION_ORDER:
@@ -71,12 +74,12 @@ def _render_issue_html(issue: dict) -> str:
             continue
 
         label = SECTION_LABELS.get(section, section)
-        parts.append(f"<h3>{label}</h3>")
+        parts.append(f"<h3>{escape(label)}</h3>")
         parts.append("<ul>")
         for item in section_items:
-            title = item.get("title", "")
-            url = item.get("url", "")
-            summary = item.get("summary", "")
+            title = escape(item.get("title", ""))
+            url = escape(item.get("url", ""))
+            summary = escape(item.get("summary", ""))
             link = f'<a href="{url}">{title}</a>' if url else title
             if summary:
                 parts.append(f"<li>{link} — {summary}</li>")

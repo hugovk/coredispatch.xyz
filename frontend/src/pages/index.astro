@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+import EditionCard from "../components/EditionCard.astro";
+import SubscribeForm from "../components/SubscribeForm";
+import { getAllEditions } from "../lib/issues";
+
+const editions = getAllEditions();
+const recent = editions.slice(0, 4);
+---
+
+<Layout>
+  <div class="mx-auto max-w-3xl px-6 py-16">
+    <div class="text-center mb-16">
+      <h1 class="text-4xl font-bold tracking-tight">
+        <span class="bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent">
+          Core Dispatch
+        </span>
+      </h1>
+      <p class="mt-4 text-base text-muted max-w-md mx-auto">
+        A regular digest of what's happening in Python core development — from merged PRs
+        and PEP decisions to community discussions and upcoming events.
+      </p>
+      <div class="mt-8 mx-auto max-w-sm">
+        <SubscribeForm client:load />
+      </div>
+    </div>
+
+    {recent.length > 0 && (
+      <div>
+        <h2 class="text-lg font-semibold mb-4">Recent Editions</h2>
+        <div class="space-y-3">
+          {recent.map((issue) => <EditionCard issue={issue} />)}
+        </div>
+        {editions.length > 4 && (
+          <div class="mt-6 text-center">
+            <a href="/editions" class="text-sm text-accent hover:text-accent-hover transition-colors">
+              View all {editions.length} editions →
+            </a>
+          </div>
+        )}
+      </div>
+    )}
+  </div>
+</Layout>

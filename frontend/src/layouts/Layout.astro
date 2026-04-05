@@ -1,0 +1,74 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = "Core Dispatch",
+  description = "A regular digest of what's happening in CPython — from merged PRs and PEP decisions to community discussions and upcoming events.",
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title === "Core Dispatch" ? title : `${title} — Core Dispatch`;
+---
+
+<!doctype html>
+<html lang="en" class="h-full antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://coredispatch.xyz" />
+    <meta property="og:site_name" content="Core Dispatch" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="alternate" type="application/rss+xml" title="Core Dispatch" href="/api/feed/rss" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-full flex flex-col">
+    <header class="border-b border-border bg-surface sticky top-0 z-50">
+      <nav class="mx-auto flex max-w-3xl items-center justify-between px-6 py-3">
+        <a href="/" class="flex items-center gap-1.5 font-bold tracking-tight text-lg" aria-label="Core Dispatch home">
+          <span class="bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent">core</span>
+          <span class="text-python-yellow">/</span>
+          <span>dispatch</span>
+        </a>
+        <div class="flex items-center gap-5 text-sm">
+          <a href="/editions" class="text-muted hover:text-foreground transition-colors">Editions</a>
+          <a href="/subscribe" class="rounded-full bg-gradient-to-r from-gradient-start to-gradient-end px-3.5 py-1.5 text-xs font-medium text-white hover:opacity-90 transition-opacity">Subscribe</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="mt-auto border-t border-border py-10">
+      <div class="mx-auto max-w-3xl px-6 text-center text-sm text-muted">
+        <p class="font-medium text-foreground/60">Core Dispatch</p>
+        <p class="mt-1">A regular digest of what's happening in CPython.</p>
+        <div class="mt-4 flex items-center justify-center gap-4">
+          <a href="https://github.com/savannahostrowski/coredispatch.xyz/issues/new?template=submit-link.yml" class="hover:text-foreground transition-colors">Submit a link</a>
+          <span class="text-border">|</span>
+          <a href="/api/feed/rss" class="hover:text-foreground transition-colors">RSS</a>
+          <span class="text-border">|</span>
+          <a href="https://github.com/savannahostrowski/coredispatch.xyz" class="hover:text-foreground transition-colors">GitHub</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  @import "../styles/globals.css";
+</style>

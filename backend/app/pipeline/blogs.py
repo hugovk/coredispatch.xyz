@@ -1,15 +1,26 @@
-"""Fetch recent posts from the official Python blog."""
+"""Fetch recent posts from official Python blogs."""
 
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from xml.etree import ElementTree
 
-import httpx
+import os
 
-OFFICIAL_FEEDS = [
-    {"url": "https://blog.python.org/rss.xml", "name": "Python Blog"},
-    {"url": "https://blog.pypi.org/feed_rss_created.xml", "name": "PyPI Blog"},
-]
+import httpx
+import yaml
+
+MANIFEST_PATH = Path(
+    os.environ.get(
+        "OFFICIAL_FEEDS_PATH", str(Path(__file__).resolve().parents[3] / "official.yml")
+    )
+)
 DC_NS = "{http://purl.org/dc/elements/1.1/}"
+
+
+def _load_feeds() -> list[dict]:
+    if not MANIFEST_PATH.exists():
+        return []
+    return yaml.safe_load(MANIFEST_PATH.read_text()) or []
 
 
 def _parse_rss_date(date_str: str) -> datetime | None:
@@ -35,7 +46,7 @@ async def fetch_official_news(days: int = 14) -> list[dict]:
     items: list[dict] = []
 
     async with httpx.AsyncClient(timeout=30, follow_redirects=True) as client:
-        for feed in OFFICIAL_FEEDS:
+        for feed in _load_feeds():
             try:
                 resp = await client.get(feed["url"])
                 resp.raise_for_status()

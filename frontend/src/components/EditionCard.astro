@@ -1,0 +1,19 @@
+---
+import type { Issue } from "../lib/types";
+import { formatDateRange } from "../lib/format";
+
+interface Props {
+  issue: Issue;
+  basePath?: string;
+}
+
+const { issue, basePath = "/editions" } = Astro.props;
+const editorial = issue.editorial_notes?.replace(/<!--[\s\S]*?-->/g, "").trim();
+---
+
+<a href={`${basePath}/${issue.number}`}
+  class="group block rounded-lg border border-border bg-surface p-5 transition-all hover:border-accent/40 hover:shadow-sm">
+  <h3 class="font-semibold group-hover:text-accent transition-colors">{issue.title}</h3>
+  <p class="mt-1.5 text-sm text-muted">{formatDateRange(issue.period_start, issue.period_end)}</p>
+  {editorial && <p class="mt-2 text-sm text-muted/80 line-clamp-2">{editorial}</p>}
+</a>
