@@ -2,23 +2,53 @@
 # Posts from these feeds appear in the "Core Dev Musings" section.
 # Use tag-filtered feed URLs where available to avoid off-topic posts.
 
+- name: "core.py (Pablo Galindo & Łukasz Langa)"
+  url: https://www.youtube.com/feeds/videos.xml?playlist_id=PLShJCpYUN3C3XrdguJiAZrQEnQGH-Sq26
+
+- name: Alex Gaynor
+  url: https://alexgaynor.net/feed.xml
+
+- name: Alyssa Coghlan
+  url: https://www.curiousefficiency.org/rss.xml
+
 - name: Brett Cannon
   url: https://snarky.ca/tag/python/rss/
-
-- name: Savannah Ostrowski
-  url: https://savannah.dev/tags/cpython/index.xml
-
-- name: Ken Jin
-  url: https://fidget-spinner.github.io/feed.xml
-
-- name: Hugo van Kemenade
-  url: https://hugovk.dev/tags/python/index.xml
 
 - name: Emma Smith
   url: https://emmatyping.dev/feeds/python/rss.xml
 
+- name: Giampaolo Rodola
+  url: https://gmpy.dev/feeds/atom.tag.python.xml
+
+- name: Guido van Rossum
+  url: https://gvanrossum.github.io/interviews/feed.xml
+
+- name: Hugo van Kemenade
+  url: https://hugovk.dev/tags/python/index.xml
+
+- name: Hynek Schlawack
+  url: https://hynek.me/index.xml
+
+- name: Ken Jin
+  url: https://fidget-spinner.github.io/feed.xml
+
+- name: Kushal Das
+  url: https://kushaldas.in/rss.xml
+
+- name: Mariatta
+  url: https://mariatta.ca/tags/python/index.xml
+
+- name: Michael Droettboom
+  url: https://droettboom.com/feeds/all.atom.xml
+
+- name: Ned Batchelder
+  url: https://nedbatchelder.com/blog/rss.xml
+
+- name: Savannah Ostrowski
+  url: https://savannah.dev/tags/cpython/index.xml
+
 - name: Seth Larson
   url: https://sethmlarson.dev/feed
 
-- name: "core.py (Pablo Galindo & Łukasz Langa)"
-  url: https://www.youtube.com/feeds/videos.xml?playlist_id=PLShJCpYUN3C3XrdguJiAZrQEnQGH-Sq26
+- name: Łukasz Langa
+  url: https://lukasz.langa.pl/programming/atom.xml
