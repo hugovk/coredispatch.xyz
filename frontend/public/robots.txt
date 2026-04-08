@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://coredispatch.xyz/sitemap.xml
+Sitemap: https://coredispatch.xyz/sitemap-index.xml

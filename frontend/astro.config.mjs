@@ -1,10 +1,12 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  integrations: [react()],
+  site: "https://coredispatch.xyz",
+  integrations: [react(), sitemap({ filter: (page) => !page.includes("/staging") })],
   vite: {
     plugins: [tailwindcss()],
     server: {
