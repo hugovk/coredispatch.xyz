@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Submit a Link" description="Got a cool Python core-related link, tool, talk, or quote? Submit it for the next edition of Core Dispatch.">
+  <div class="flex-1 flex items-center justify-center">
+    <div class="mx-auto max-w-md px-6 text-center">
+      <h1 class="text-3xl font-bold tracking-tight mb-3">Submit a Link</h1>
+      <p class="text-muted mb-6">
+        Got something the Python community should see? We'd love to feature it in the next edition.
+      </p>
+      <p class="text-sm text-muted mb-8">
+        We're looking for blog posts, tools, videos, talks, or anything related to CPython and Python core development for <span class="text-foreground font-medium">Community Picks</span> — or a fun, insightful quote for <span class="text-foreground font-medium">One More Thing</span>.
+      </p>
+      <a
+        href="https://github.com/savannahostrowski/coredispatch.xyz/issues/new?template=submit-link.yml"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block rounded-full bg-gradient-to-r from-gradient-start to-gradient-end px-6 py-2.5 text-sm font-medium text-white hover:opacity-90 transition-opacity"
+      >
+        Submit on GitHub
+      </a>
+    </div>
+  </div>
+</Layout>

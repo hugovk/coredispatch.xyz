@@ -51,7 +51,7 @@ const fullTitle = title.includes("Core Dispatch") ? title : `${title} — Core D
       </nav>
     </header>
 
-    <main class="flex-1">
+    <main class="flex-1 flex flex-col">
       <slot />
     </main>
 
@@ -60,7 +60,7 @@ const fullTitle = title.includes("Core Dispatch") ? title : `${title} — Core D
         <p class="font-medium text-foreground/60">Core Dispatch</p>
         <p class="mt-1">A regular digest of what's happening in CPython.</p>
         <div class="mt-4 flex items-center justify-center gap-4">
-          <a href="https://github.com/savannahostrowski/coredispatch.xyz/issues/new?template=submit-link.yml" class="hover:text-foreground transition-colors">Submit a link</a>
+          <a href="/submit" class="hover:text-foreground transition-colors">Submit a link</a>
           <span class="text-border">|</span>
           <a href="/api/feed/rss" class="hover:text-foreground transition-colors">RSS</a>
         </div>
