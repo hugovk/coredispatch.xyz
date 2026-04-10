@@ -54,7 +54,7 @@ export const SECTION_LABELS: Record<Section, string> = {
 };
 
 export const SECTION_DESCRIPTIONS: Partial<Record<Section, string>> = {
-  official_news: "From the Python and PyPI blogs.",
+  official_news: "From the Python, PSF, PyPI and PyCon blogs.",
   pep_updates: "PEPs that changed status since last edition.",
   steering_council: "Meeting summaries from the Python Steering Council.",
   merged_prs: "High-traffic PRs, new features, and changes that landed in What's New.",
