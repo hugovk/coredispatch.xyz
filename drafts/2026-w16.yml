@@ -1,0 +1,405 @@
+number: 2
+title: 'Core Dispatch #2'
+slug: 2026-w16
+period_start: '2026-04-04'
+period_end: '2026-04-17'
+editorial_notes: '<!-- Write your editorial notes here -->
+
+  '
+quote:
+  text: <!-- Add a quote here -->
+  author: ''
+  url: ''
+credits: []
+items:
+- section: upcoming_releases
+  title: Python 3.15.0 beta 1
+  url: https://peps.python.org/pep-0790/
+  summary: May 05
+  source: release_schedule
+  metadata:
+    date: '2026-05-05'
+- section: official_news
+  title: How to Build Your PyCon US 2026 Schedule
+  url: https://pycon.blogspot.com/2026/04/how-to-build-your-pycon-us-2026-schedule.html
+  summary: By noreply@blogger.com (The PyCon US Team)
+  source: python_blog
+  metadata:
+    feed: PyCon US
+    author: noreply@blogger.com (The PyCon US Team)
+    published: Mon, 13 Apr 2026 16:21:00 +0000
+- section: official_news
+  title: Stories from the PyCon US Hotels
+  url: https://pycon.blogspot.com/2026/04/stories-from-pycon-us-hotels.html
+  summary: By noreply@blogger.com (The PyCon US Team)
+  source: python_blog
+  metadata:
+    feed: PyCon US
+    author: noreply@blogger.com (The PyCon US Team)
+    published: Tue, 07 Apr 2026 14:30:00 +0000
+- section: official_news
+  title: 'Python and the Future of AI: Agents, Inference, and Edge AI'
+  url: https://pycon.blogspot.com/2026/04/python-and-future-of-ai-agents.html
+  summary: By noreply@blogger.com (The PyCon US Team)
+  source: python_blog
+  metadata:
+    feed: PyCon US
+    author: noreply@blogger.com (The PyCon US Team)
+    published: Mon, 06 Apr 2026 14:33:00 +0000
+- section: official_news
+  title: PyPI has completed its second audit
+  url: https://blog.pypi.org/posts/2026-04-16-pypi-completes-second-audit/
+  summary: By Mike Fiedler
+  source: python_blog
+  metadata:
+    feed: PyPI Blog
+    author: Mike Fiedler
+    published: Thu, 16 Apr 2026 14:00:00 +0000
+- section: official_news
+  title: Rust for CPython Progress Update April 2026
+  url: https://blog.python.org/2026/04/rust-for-cpython-2026-04/
+  summary: By Emma Smith
+  source: python_blog
+  metadata:
+    feed: Python Blog
+    author: Emma Smith
+    published: Wed, 08 Apr 2026 00:00:00 GMT
+- section: official_news
+  title: Python 3.15.0a8, 3.14.4 and 3.13.13 are out!
+  url: https://blog.python.org/2026/04/python-3150a8-3144-31313/
+  summary: By Hugo van Kemenade
+  source: python_blog
+  metadata:
+    feed: Python Blog
+    author: Hugo van Kemenade
+    published: Tue, 07 Apr 2026 00:00:00 GMT
+- section: pep_updates
+  title: 'PEP 800: Disjoint bases in the type system'
+  url: https://peps.python.org/pep-0800/
+  summary: ''
+  source: peps
+  metadata:
+    pep_number: 800
+    status: Accepted
+    pr_url: https://github.com/python/peps/pull/4915
+- section: steering_council
+  title: 2026-04-09 Python Steering Council meeting summary
+  url: https://discuss.python.org/t/2026-04-09-python-steering-council-meeting-summary/107011
+  summary: ''
+  source: discourse
+  metadata:
+    topic_id: 107011
+    category: committers
+- section: steering_council
+  title: 2026-04-02 Python Steering Council meeting summary
+  url: https://discuss.python.org/t/2026-04-02-python-steering-council-meeting-summary/106901
+  summary: ''
+  source: discourse
+  metadata:
+    topic_id: 106901
+    category: committers
+- section: steering_council
+  title: 2026-03-26 Python Steering Council meeting summary
+  url: https://discuss.python.org/t/2026-03-26-python-steering-council-meeting-summary/106849
+  summary: ''
+  source: discourse
+  metadata:
+    topic_id: 106849
+    category: committers
+- section: merged_prs
+  title: 'gh-137586: Open external osascript program with absolute path'
+  url: https://github.com/python/cpython/pull/137584
+  summary: ''
+  source: github
+  metadata:
+    pr_number: 137584
+    author: fionn
+    labels:
+    - type-security
+    comments: 20
+    touches_whatsnew: false
+- section: merged_prs
+  title: 'gh-148395: Fix a possible UAF in `{LZMA,BZ2,_Zlib}Decompressor`'
+  url: https://github.com/python/cpython/pull/148396
+  summary: ''
+  source: github
+  metadata:
+    pr_number: 148396
+    author: StanFromIreland
+    labels:
+    - type-security
+    - awaiting merge
+    comments: 19
+    touches_whatsnew: false
+- section: merged_prs
+  title: 'gh-146211: Reject CR/LF in HTTP tunnel request headers'
+  url: https://github.com/python/cpython/pull/146212
+  summary: ''
+  source: github
+  metadata:
+    pr_number: 146212
+    author: sethmlarson
+    labels:
+    - type-security
+    comments: 14
+    touches_whatsnew: false
+- section: merged_prs
+  title: 'gh-95004: specialize access to enums and fix scaling on free-threading'
+  url: https://github.com/python/cpython/pull/148184
+  summary: ''
+  source: github
+  metadata:
+    pr_number: 148184
+    author: kumaraditya303
+    labels:
+    - performance
+    - topic-free-threading
+    comments: 6
+    touches_whatsnew: false
+- section: merged_prs
+  title: 'gh-140870: PyREPL auto-complete module attributes in import statements '
+  url: https://github.com/python/cpython/pull/140871
+  summary: ''
+  source: github
+  metadata:
+    pr_number: 140871
+    author: loic-simon
+    labels: []
+    comments: 22
+    touches_whatsnew: false
+- section: merged_prs
+  title: 'gh-146333: Fix quadratic regex backtracking in configparser option parsing'
+  url: https://github.com/python/cpython/pull/146399
+  summary: ''
+  source: github
+  metadata:
+    pr_number: 146399
+    author: joshuaswanson
+    labels:
+    - needs backport to 3.10
+    - needs backport to 3.11
+    - needs backport to 3.12
+    comments: 20
+    touches_whatsnew: false
+- section: merged_prs
+  title: 'gh-142831: Fix UAF in `_json` module'
+  url: https://github.com/python/cpython/pull/142851
+  summary: ''
+  source: github
+  metadata:
+    pr_number: 142851
+    author: ashm-dev
+    labels:
+    - needs backport to 3.13
+    - needs backport to 3.14
+    comments: 19
+    touches_whatsnew: false
+- section: merged_prs
+  title: 'gh-139551: add support for BaseExceptionGroup in IDLE'
+  url: https://github.com/python/cpython/pull/139563
+  summary: ''
+  source: github
+  metadata:
+    pr_number: 139563
+    author: Locked-chess-official
+    labels: []
+    comments: 8
+    touches_whatsnew: false
+- section: merged_prs
+  title: 'gh-146458: Fix repl height and width tracking on resize'
+  url: https://github.com/python/cpython/pull/146459
+  summary: ''
+  source: github
+  metadata:
+    pr_number: 146459
+    author: GabrielvMarinho
+    labels:
+    - needs backport to 3.13
+    comments: 18
+    touches_whatsnew: false
+- section: merged_prs
+  title: 'gh-130273: Fix traceback color output with unicode characters'
+  url: https://github.com/python/cpython/pull/142529
+  summary: ''
+  source: github
+  metadata:
+    pr_number: 142529
+    author: grayjk
+    labels:
+    - awaiting review
+    - needs backport to 3.13
+    - needs backport to 3.14
+    comments: 17
+    touches_whatsnew: false
+- section: discussions
+  title: 'PEP 829: Structured Startup Configuration Files'
+  url: https://discuss.python.org/t/pep-829-structured-startup-configuration-files/106789
+  summary: 🔥 52 new replies · 2.2k views
+  source: discourse
+  metadata:
+    topic_id: 106789
+    new_replies: 52
+    views: 2198
+- section: discussions
+  title: 'PEP 830: Add timestamps to exceptions and tracebacks'
+  url: https://discuss.python.org/t/pep-830-add-timestamps-to-exceptions-and-tracebacks/106942
+  summary: 🔥 26 new replies · 826 views
+  source: discourse
+  metadata:
+    topic_id: 106942
+    new_replies: 26
+    views: 826
+- section: discussions
+  title: 'PEP 832: virtual environment discovery'
+  url: https://discuss.python.org/t/pep-832-virtual-environment-discovery/106998
+  summary: 🔥 23 new replies · 657 views
+  source: discourse
+  metadata:
+    topic_id: 106998
+    new_replies: 23
+    views: 657
+- section: discussions
+  title: 'PEP 802: Display Syntax for the Empty Set'
+  url: https://discuss.python.org/t/pep-802-display-syntax-for-the-empty-set/101676
+  summary: 8 new replies · 8.5k views
+  source: discourse
+  metadata:
+    topic_id: 101676
+    new_replies: 8
+    views: 8508
+- section: discussions
+  title: 'PEP 786: Precision and modulo-precision flag format specifiers for integer
+    fields'
+  url: https://discuss.python.org/t/pep-786-precision-and-modulo-precision-flag-format-specifiers-for-integer-fields/106907
+  summary: 7 new replies · 438 views
+  source: discourse
+  metadata:
+    topic_id: 106907
+    new_replies: 7
+    views: 438
+- section: discussions
+  title: 'PEP 661: Sentinel Values'
+  url: https://discuss.python.org/t/pep-661-sentinel-values/9126
+  summary: 5 new replies · 28.5k views
+  source: discourse
+  metadata:
+    topic_id: 9126
+    new_replies: 5
+    views: 28505
+- section: discussions
+  title: 'PEP 831 – Frame Pointers Everywhere: Enabling System-Level Observability
+    for Python'
+  url: https://discuss.python.org/t/pep-831-frame-pointers-everywhere-enabling-system-level-observability-for-python/106958
+  summary: 5 new replies · 393 views
+  source: discourse
+  metadata:
+    topic_id: 106958
+    new_replies: 5
+    views: 393
+- section: discussions
+  title: 'PEP 827: Type Manipulation'
+  url: https://discuss.python.org/t/pep-827-type-manipulation/106353
+  summary: 4 new replies · 5.5k views
+  source: discourse
+  metadata:
+    topic_id: 106353
+    new_replies: 4
+    views: 5525
+- section: discussions
+  title: 'PEP 800: Solid bases in the type system'
+  url: https://discuss.python.org/t/pep-800-solid-bases-in-the-type-system/99910
+  summary: 3 new replies · 2.8k views
+  source: discourse
+  metadata:
+    topic_id: 99910
+    new_replies: 3
+    views: 2838
+- section: discussions
+  title: 'PEP 803, round two – “abi3t”: Stable ABI for Free-Threaded Builds'
+  url: https://discuss.python.org/t/pep-803-round-two-abi3t-stable-abi-for-free-threaded-builds/106181
+  summary: 3 new replies · 2.5k views
+  source: discourse
+  metadata:
+    topic_id: 106181
+    new_replies: 3
+    views: 2487
+- section: events
+  title: PyTexas 2026
+  url: https://www.pytexas.org/2026/
+  summary: Apr 17
+  source: pycon_calendar
+  metadata:
+    date: '2026-04-17'
+    type: conference
+- section: events
+  title: PyCon Austria 2026
+  url: https://pycon.at/
+  summary: Apr 19
+  source: pycon_calendar
+  metadata:
+    date: '2026-04-19'
+    type: conference
+- section: events
+  title: North Bay Python 2026
+  url: http://2026.northbaypython.org/
+  summary: Apr 25
+  source: pycon_calendar
+  metadata:
+    date: '2026-04-25'
+    type: conference
+- section: events
+  title: PyCon US 2026
+  url: https://us.pycon.org/
+  summary: May 13
+  source: pycon_calendar
+  metadata:
+    date: '2026-05-13'
+    type: conference
+- section: events
+  title: PyCon Italia 2026
+  url: https://2026.pycon.it/en
+  summary: May 27
+  source: pycon_calendar
+  metadata:
+    date: '2026-05-27'
+    type: conference
+- section: events
+  title: GeoPython 2026
+  url: https://2026.geopython.net/
+  summary: Jun 08
+  source: pycon_calendar
+  metadata:
+    date: '2026-06-08'
+    type: conference
+- section: events
+  title: EuroPython 2026
+  url: https://ep2026.europython.eu/
+  summary: Jul 13
+  source: pycon_calendar
+  metadata:
+    date: '2026-07-13'
+    type: conference
+- section: events
+  title: SciPy 2026
+  url: https://www.scipy2026.scipy.org/
+  summary: Jul 13
+  source: pycon_calendar
+  metadata:
+    date: '2026-07-13'
+    type: conference
+- section: musings
+  title: If it could have, why didn't it?
+  url: https://alexgaynor.net/2026/apr/13/why-didnt-it/
+  summary: By Alex Gaynor
+  source: blog
+  metadata:
+    feed: Alex Gaynor
+    author: Alex Gaynor
+- section: musings
+  title: Add Animal Crossing events to your digital calendar
+  url: https://sethmlarson.dev/animal-crossing-calendar?utm_campaign=rss
+  summary: By Seth Larson
+  source: blog
+  metadata:
+    feed: Seth Larson
+    author: Seth Larson
